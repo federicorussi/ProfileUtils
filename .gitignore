@@ -1,0 +1,14 @@
+*.class
+
+ 
+### Eclipse ###
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+.classpath
+.settings/
+
