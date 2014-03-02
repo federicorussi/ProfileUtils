@@ -17,6 +17,7 @@ import com.facebook.model.GraphUser;
 public class ProfileUtils extends Activity {
 	
 	private static final int PICK_FRIENDS_ACTIVITY = 1;
+	private static final int SELECT_FRIENDS_ACTIVITY = 2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class ProfileUtils extends Activity {
 
 	}
 
-	protected void onClickGetContactsList() {
+	protected void onClickGetContactsListUsingFriendFragment() {
 		if (ensureOpenSession()) {
             Intent intent = new Intent(this, PickFriendsActivity.class);
             // Note: The following line is optional, as multi-select behavior is the default for
@@ -43,7 +44,14 @@ public class ProfileUtils extends Activity {
             // friend picker if single-select functionality was desired, or if a different user ID was
             // desired (for instance, to see friends of a friend).
             PickFriendsActivity.populateParameters(intent, null, true, true);
-            startActivityForResult(intent, PICK_FRIENDS_ACTIVITY);
+            startActivityForResult(intent, SELECT_FRIENDS_ACTIVITY);
+        }
+	}
+	
+	protected void onClickGetContactsList() {
+		if (ensureOpenSession()) {
+            Intent intent = new Intent(this, SelectFriendsActivity.class);
+            startActivityForResult(intent, SELECT_FRIENDS_ACTIVITY);
         }
 	}
 

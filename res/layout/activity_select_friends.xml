@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".SelectFriendsActivity" >
+
+    <ListView
+        android:id="@+id/friendsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selectAllCheckBox"
+        android:choiceMode="multipleChoice"
+        android:clickable="true" >
+
+    </ListView>
+
+    <CheckBox
+        android:id="@+id/selectAllCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/friendsList"
+        android:layout_alignParentTop="true"
+        android:text="all" />
+
+    <TextView
+        android:id="@+id/noOfSelectedUsers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/friendsList"
+        android:layout_alignTop="@+id/exportButton"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/exportButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/selectAllCheckBox"
+        android:layout_alignBottom="@+id/selectAllCheckBox"
+        android:layout_alignRight="@+id/friendsList"
+        android:text="Export" />
+    
+</RelativeLayout>

@@ -7,5 +7,6 @@
     <string name="app_id">415765458558454</string>
     <string name="export_contacts">Export Contacts</string>
     <string name="exception">Exception..............</string>
+    <string name="title_activity_select_friends">SelectFriendsActivity</string>
 
 </resources>
