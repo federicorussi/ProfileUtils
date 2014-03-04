@@ -200,7 +200,7 @@ containing a value of this type.
         public static final int com_facebook_list_section_header_background=0x7f02000d;
         public static final int com_facebook_loginbutton_silver=0x7f02000e;
         public static final int com_facebook_logo=0x7f02000f;
-        public static final int com_facebook_picker_default_separator_color=0x7f020021;
+        public static final int com_facebook_picker_default_separator_color=0x7f020038;
         public static final int com_facebook_picker_item_background=0x7f020010;
         public static final int com_facebook_picker_list_focused=0x7f020011;
         public static final int com_facebook_picker_list_longpressed=0x7f020012;
@@ -217,10 +217,34 @@ containing a value of this type.
         public static final int com_facebook_top_background=0x7f02001d;
         public static final int com_facebook_top_button=0x7f02001e;
         public static final int com_facebook_usersettingsfragment_background_gradient=0x7f02001f;
-        public static final int ic_launcher=0x7f020020;
+        public static final int ic_action_attach=0x7f020020;
+        public static final int ic_action_call=0x7f020021;
+        public static final int ic_action_copy=0x7f020022;
+        public static final int ic_action_cut=0x7f020023;
+        public static final int ic_action_delete=0x7f020024;
+        public static final int ic_action_done=0x7f020025;
+        public static final int ic_action_edit=0x7f020026;
+        public static final int ic_action_locate=0x7f020027;
+        public static final int ic_action_mail=0x7f020028;
+        public static final int ic_action_mail_add=0x7f020029;
+        public static final int ic_action_microphone=0x7f02002a;
+        public static final int ic_action_overflow=0x7f02002b;
+        public static final int ic_action_paste=0x7f02002c;
+        public static final int ic_action_photo=0x7f02002d;
+        public static final int ic_action_refresh=0x7f02002e;
+        public static final int ic_action_search=0x7f02002f;
+        public static final int ic_action_select_all=0x7f020030;
+        public static final int ic_action_send=0x7f020031;
+        public static final int ic_action_share=0x7f020032;
+        public static final int ic_action_star=0x7f020033;
+        public static final int ic_action_user=0x7f020034;
+        public static final int ic_action_user_add=0x7f020035;
+        public static final int ic_action_video=0x7f020036;
+        public static final int ic_launcher=0x7f020037;
     }
     public static final class id {
         public static final int action_settings=0x7f040024;
+        public static final int checkMark=0x7f040023;
         public static final int com_facebook_login_activity_progress_bar=0x7f04000b;
         public static final int com_facebook_picker_activity_circle=0x7f04000a;
         public static final int com_facebook_picker_checkbox=0x7f04000d;
@@ -253,7 +277,6 @@ containing a value of this type.
         public static final int picker_subtitle=0x7f040018;
         public static final int profile_pic=0x7f040020;
         public static final int selectAllCheckBox=0x7f040006;
-        public static final int selected=0x7f040023;
         public static final int small=0x7f040000;
         public static final int thumbnail=0x7f04001f;
         public static final int username=0x7f040003;

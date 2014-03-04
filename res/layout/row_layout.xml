@@ -46,14 +46,13 @@
         android:textColor="#343434"
         android:textSize="12sp" />
 
-    <CheckBox
-        android:id="@+id/selected"
+    <ImageView
+        android:id="@+id/checkMark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/location"
-        android:layout_below="@+id/name"
-        android:focusable="false"
-  		android:focusableInTouchMode="false"
-        android:layout_marginRight="14dp" />
+        android:layout_centerVertical="true"
+        android:layout_marginRight="29dp"
+        android:src="@drawable/ic_action_done" />
  
 </RelativeLayout>

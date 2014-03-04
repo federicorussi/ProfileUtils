@@ -4,6 +4,8 @@ import java.util.List;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -74,8 +76,9 @@ public class SelectFriendsActivity extends Activity {
 					
 					ListView friendsList = (ListView) parent;
 
-					CheckBox checkBox = (CheckBox) view.findViewById(R.id.selected);
-					checkBox.setChecked(!checkBox.isChecked());
+					ImageView checkMark = (ImageView) view.findViewById(R.id.checkMark);
+					int visibility = checkMark.getVisibility()==View.VISIBLE?View.INVISIBLE:View.VISIBLE;
+					checkMark.setVisibility(visibility);
 					noOfSelectedUsers.setText("("+friendsList.getCheckedItemCount()+")");
 					
 				}

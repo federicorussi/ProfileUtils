@@ -4,12 +4,15 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -55,21 +58,11 @@ public class FriendListViewAdapter extends BaseAdapter {
 		TextView name = (TextView)vi.findViewById(R.id.name); // name
         TextView location = (TextView)vi.findViewById(R.id.location);
         ProfilePictureView profilePic=(ProfilePictureView)vi.findViewById(R.id.profile_pic); // thumb image
-        
-        CheckBox checkBox = (CheckBox) vi.findViewById(R.id.selected);
-        checkBox.setTag(position);
-        checkBox.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				CheckBox checkBox = (CheckBox) v;
-				if(checkBox.isChecked()){
-					list.setItemChecked((Integer) checkBox.getTag(), true);
-				}else{
-					list.setItemChecked((Integer) checkBox.getTag(), false);
-				}
-			}
-		});
+        ImageView checkMark = (ImageView) vi.findViewById(R.id.checkMark);
+		Drawable drawable = vi.getResources().getDrawable(R.drawable.ic_action_done);
+		drawable.setColorFilter(android.graphics.Color.rgb(0, 129, 196), Mode.MULTIPLY);
+		checkMark.setImageDrawable(drawable);
+		checkMark.setVisibility(View.INVISIBLE);
         
         //name
         name.setText(user.getName());
