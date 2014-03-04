@@ -11,4 +11,5 @@ tmp/**/*
 *.bak
 .classpath
 .settings/
-
+bin/**
+gen/**

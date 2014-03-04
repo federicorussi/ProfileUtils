@@ -13,16 +13,19 @@ import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
+import com.facebook.widget.ProfilePictureView;
 
 public class ProfileUtils extends Activity {
 	
 	private static final int PICK_FRIENDS_ACTIVITY = 1;
 	private static final int SELECT_FRIENDS_ACTIVITY = 2;
+	ProfilePictureView profilePictureView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile_utils);
+		profilePictureView = (ProfilePictureView) findViewById(R.id.user_profile_pic);
 		Button button = (Button) findViewById(R.id.export_contacts_view);
 		button.setOnClickListener(new View.OnClickListener() {
 			
@@ -96,6 +99,7 @@ public class ProfileUtils extends Activity {
 				if (user != null) {
 					TextView welcome = (TextView) findViewById(R.id.username);
 					welcome.setText("Welcome " + user.getName() + "!");
+					profilePictureView.setProfileId(user.getId());
 				}
 			}
 		});

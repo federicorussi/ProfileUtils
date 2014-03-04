@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,25 +9,35 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ProfileUtils" >
 
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="@dimen/username_text_size" >
-
-        <requestFocus />
-    </EditText>
+    <com.facebook.widget.ProfilePictureView
+            android:id="@+id/user_profile_pic"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            facebook:preset_size="small" />
 
     <Button
         android:id="@+id/export_contacts_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/username"
-        android:layout_marginLeft="20dp"
+        android:layout_alignLeft="@+id/user_profile_pic"
+        android:layout_below="@+id/user_profile_pic"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="79dp"
         android:text="@string/export_contacts" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/user_profile_pic"
+        android:layout_marginRight="85dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="@dimen/username_text_size"
+        tools:ignore="NewApi" />
 
 </RelativeLayout>
