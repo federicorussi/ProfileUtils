@@ -86,12 +86,11 @@ public class ProfileUtils extends Activity {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	private void getUserName(Session session, SessionState state,
 			Exception exception) {
 
 		// make request to the /me API
-		Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
+		Request.newMeRequest(session, new Request.GraphUserCallback() {
 
 			// callback after Graph API response with user object
 			@Override
@@ -102,7 +101,7 @@ public class ProfileUtils extends Activity {
 					profilePictureView.setProfileId(user.getId());
 				}
 			}
-		});
+		}).executeAsync();
 	}
 
 	@Override
