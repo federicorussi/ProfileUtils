@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,9 +22,11 @@ public class FriendListViewAdapter extends BaseAdapter {
 
 	List<GraphUser> friends;
 	private LayoutInflater inflater;
-
+	CheckBox selectAllCheckBox;
+	
 	public FriendListViewAdapter(Activity activity, List<GraphUser> friends) {
 		this.friends = friends;
+		selectAllCheckBox = (CheckBox) activity.findViewById(R.id.selectAllCheckBox);
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -51,6 +54,8 @@ public class FriendListViewAdapter extends BaseAdapter {
 			vi = inflater.inflate(R.layout.row_layout, null);
 
 		final ListView list = (ListView) parent;
+		
+		
 
 		GraphUser user = friends.get(position);
 
@@ -77,6 +82,12 @@ public class FriendListViewAdapter extends BaseAdapter {
 		// profile pic
 		profilePic.setProfileId(user.getId());
 
+		//handle select all
+		if(list.isItemChecked(position)){
+			checkMark.setVisibility(View.VISIBLE);
+		}else{
+			checkMark.setVisibility(View.INVISIBLE);
+		}
 		return vi;
 	}
 
@@ -87,6 +98,5 @@ public class FriendListViewAdapter extends BaseAdapter {
 	@Override
 	public void notifyDataSetChanged() {
 		super.notifyDataSetChanged();
-		
 	}
 }

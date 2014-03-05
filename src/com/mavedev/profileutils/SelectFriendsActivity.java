@@ -94,19 +94,16 @@ public class SelectFriendsActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					CheckBox selectAll = (CheckBox) v;
-					for(int position=0; position<friends.size(); position++){
-						friendsListView.setItemChecked(position, selectAll.isChecked());
-						System.out.println(position);
-						View row = friendsListView.getChildAt(position);
-						ImageView checkMark = (ImageView) row.findViewById(R.id.checkMark);
-						int visibility = selectAll.isChecked()?View.INVISIBLE:View.VISIBLE;
-						checkMark.setVisibility(visibility);
-					}
-					updateTotalCount(friendsListView);
+						for(int position=0;position<adapter.getCount();position++){
+							friendsListView.setItemChecked(position, selectAll.isChecked());
+						}
+						adapter.notifyDataSetChanged();
+						updateTotalCount(friendsListView);
 							
 				}
 			});
 	}
+
 
 	private void updateTotalCount(ListView friendsList) {
 		noOfSelectedUsers.setText("("+friendsList.getCheckedItemCount()+")");
