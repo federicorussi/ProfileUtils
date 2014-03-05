@@ -4,8 +4,6 @@ import java.util.List;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,6 +29,7 @@ public class SelectFriendsActivity extends Activity {
 	ListView friendsListView;
 	TextView noOfSelectedUsers;
 	Button exportButton;
+	CheckBox selectAllCheckBox;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,6 +37,7 @@ public class SelectFriendsActivity extends Activity {
 		friendsListView = (ListView) findViewById(R.id.friendsList);
 		noOfSelectedUsers = (TextView)findViewById(R.id.noOfSelectedUsers);
 		exportButton = (Button) findViewById(R.id.exportButton);
+		selectAllCheckBox = (CheckBox) findViewById(R.id.selectAllCheckBox);
 	}
 
 	@Override
@@ -63,7 +64,7 @@ public class SelectFriendsActivity extends Activity {
 		
 	}
 
-	protected void populateFriendsList(List<GraphUser> friends) {
+	protected void populateFriendsList(final List<GraphUser> friends) {
 		final FriendListViewAdapter adapter = new FriendListViewAdapter(this, friends);
 			friendsListView.setAdapter(adapter);
 			friendsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -79,18 +80,46 @@ public class SelectFriendsActivity extends Activity {
 					ImageView checkMark = (ImageView) view.findViewById(R.id.checkMark);
 					int visibility = checkMark.getVisibility()==View.VISIBLE?View.INVISIBLE:View.VISIBLE;
 					checkMark.setVisibility(visibility);
-					noOfSelectedUsers.setText("("+friendsList.getCheckedItemCount()+")");
+					updateTotalCount(friendsList);
 					
 				}
+
+				
 			});
 			
-			exportButton.setOnClickListener(new OnClickListener() {
+			onClickExport();
+			
+			selectAllCheckBox.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					System.out.println(friendsListView.getCheckedItemPositions());
-					
+					CheckBox selectAll = (CheckBox) v;
+					for(int position=0; position<friends.size(); position++){
+						friendsListView.setItemChecked(position, selectAll.isChecked());
+						System.out.println(position);
+						View row = friendsListView.getChildAt(position);
+						ImageView checkMark = (ImageView) row.findViewById(R.id.checkMark);
+						int visibility = selectAll.isChecked()?View.INVISIBLE:View.VISIBLE;
+						checkMark.setVisibility(visibility);
+					}
+					updateTotalCount(friendsListView);
+							
 				}
 			});
+	}
+
+	private void updateTotalCount(ListView friendsList) {
+		noOfSelectedUsers.setText("("+friendsList.getCheckedItemCount()+")");
+	}
+	
+	private void onClickExport() {
+		exportButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				System.out.println(friendsListView.getCheckedItemPositions());
+				
+			}
+		});
 	}	
 }

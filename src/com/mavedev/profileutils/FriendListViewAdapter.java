@@ -8,10 +8,8 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,14 +19,15 @@ import com.facebook.widget.ProfilePictureView;
 
 public class FriendListViewAdapter extends BaseAdapter {
 
-		List<GraphUser> friends;
-		private LayoutInflater inflater;
-	
-		public FriendListViewAdapter(Activity activity, List<GraphUser> friends) {
-			this.friends = friends;
-			inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		}
-	
+	List<GraphUser> friends;
+	private LayoutInflater inflater;
+
+	public FriendListViewAdapter(Activity activity, List<GraphUser> friends) {
+		this.friends = friends;
+		inflater = (LayoutInflater) activity
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	}
+
 	@Override
 	public int getCount() {
 		return friends.size();
@@ -47,42 +46,47 @@ public class FriendListViewAdapter extends BaseAdapter {
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 
-		View vi=convertView;
-        if(convertView==null)
-            vi = inflater.inflate(R.layout.row_layout, null);
- 
-        final ListView list = (ListView) parent;
-        
-        GraphUser user = friends.get(position);
-		
-		TextView name = (TextView)vi.findViewById(R.id.name); // name
-        TextView location = (TextView)vi.findViewById(R.id.location);
-        ProfilePictureView profilePic=(ProfilePictureView)vi.findViewById(R.id.profile_pic); // thumb image
-        ImageView checkMark = (ImageView) vi.findViewById(R.id.checkMark);
-		Drawable drawable = vi.getResources().getDrawable(R.drawable.ic_action_done);
-		drawable.setColorFilter(android.graphics.Color.rgb(0, 129, 196), Mode.MULTIPLY);
+		View vi = convertView;
+		if (convertView == null)
+			vi = inflater.inflate(R.layout.row_layout, null);
+
+		final ListView list = (ListView) parent;
+
+		GraphUser user = friends.get(position);
+
+		TextView name = (TextView) vi.findViewById(R.id.name); // name
+		TextView location = (TextView) vi.findViewById(R.id.location);
+		ProfilePictureView profilePic = (ProfilePictureView) vi
+				.findViewById(R.id.profile_pic); // thumb image
+		ImageView checkMark = (ImageView) vi.findViewById(R.id.checkMark);
+		Drawable drawable = vi.getResources().getDrawable(
+				R.drawable.ic_action_done);
+		drawable.setColorFilter(android.graphics.Color.rgb(0, 129, 196),
+				Mode.MULTIPLY);
 		checkMark.setImageDrawable(drawable);
 		checkMark.setVisibility(View.INVISIBLE);
-        
-        //name
-        name.setText(user.getName());
-        
-        //location
-        if(user.getLocation()!=null){
-        	location.setText(user.getLocation().getCity());
-        }
 
-        //profile pic
-        profilePic.setProfileId(user.getId());
-        
-        
-        
-        return vi;
+		// name
+		name.setText(user.getName());
+
+		// location
+		if (user.getLocation() != null) {
+			location.setText(user.getLocation().getCity());
+		}
+
+		// profile pic
+		profilePic.setProfileId(user.getId());
+
+		return vi;
 	}
 
 	public int getSelectItemsCount() {
 		return friends.size();
 	}
 
-
+	@Override
+	public void notifyDataSetChanged() {
+		super.notifyDataSetChanged();
+		
+	}
 }
