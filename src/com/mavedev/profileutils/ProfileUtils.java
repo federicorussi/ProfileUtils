@@ -1,5 +1,8 @@
 package com.mavedev.profileutils;
 
+import java.util.Arrays;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,14 +14,16 @@ import android.widget.TextView;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
+import com.facebook.Session.Builder;
+import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.ProfilePictureView;
 
 public class ProfileUtils extends Activity {
-	
-	private static final int PICK_FRIENDS_ACTIVITY = 1;
-	private static final int SELECT_FRIENDS_ACTIVITY = 2;
+	private static final List<String> PERMISSIONS = Arrays.asList("email", "friends_notes", "friends_relationship_details", "friends_about_me");
+	private StatusCallback statusCallback= new StatusCallBack(); 
+	private static final int SELECT_FRIENDS_ACTIVITY = 1;
 	ProfilePictureView profilePictureView;
 	
 	@Override
@@ -35,21 +40,12 @@ public class ProfileUtils extends Activity {
 			}
 		});
 		
-		ensureOpenSession();
+		if(ensureOpenSession()){
+			getUserName(Session.getActiveSession());
+		}
 
 	}
 
-	protected void onClickGetContactsListUsingFriendFragment() {
-		if (ensureOpenSession()) {
-            Intent intent = new Intent(this, PickFriendsActivity.class);
-            // Note: The following line is optional, as multi-select behavior is the default for
-            // FriendPickerFragment. It is here to demonstrate how parameters could be passed to the
-            // friend picker if single-select functionality was desired, or if a different user ID was
-            // desired (for instance, to see friends of a friend).
-            PickFriendsActivity.populateParameters(intent, null, true, true);
-            startActivityForResult(intent, SELECT_FRIENDS_ACTIVITY);
-        }
-	}
 	
 	protected void onClickGetContactsList() {
 		if (ensureOpenSession()) {
@@ -59,35 +55,40 @@ public class ProfileUtils extends Activity {
 	}
 
 	private boolean ensureOpenSession() {
-
-		if (Session.getActiveSession() == null
-				|| Session.getActiveSession().isClosed()) {
-			Session.openActiveSession(this, true, new Session.StatusCallback() {
-
-				// callback when session changes state
-				@SuppressWarnings("deprecation")
-				@Override
-				public void call(Session session, SessionState state,
-						Exception exception) {
-					onSessionStateChanged(session, state, exception);
-				}
-			});
-			return false;
-		}else{
+		Session session = Session.getActiveSession();
+		if (session == null
+				|| session.isClosed()) {
+			session = new Builder(this).build();
+		}
+		
+		if(!session.isClosed() && !session.isOpened()){
+	            Session.setActiveSession(session);
+	            session.openForRead(new Session.OpenRequest(this)
+				.setPermissions(PERMISSIONS)
+				.setCallback(statusCallback));
+	        return false;
+		}
+	
+		Session.NewPermissionsRequest newPermissionsRequest = new Session
+			      .NewPermissionsRequest(this, Arrays.asList("user_checkins"));
+			    session.requestNewReadPermissions(newPermissionsRequest);
+			    
+		if(session.isOpened()){
+			System.out.println(Session.getActiveSession().getPermissions());
 			return true;
 		}
+		return false;
 
 	}
 
 	protected void onSessionStateChanged(Session session, SessionState state,
 			Exception exception) {
 		if (session.isOpened()) {
-			getUserName(session, state, exception);
+			getUserName(session);
 		}
 	}
 
-	private void getUserName(Session session, SessionState state,
-			Exception exception) {
+	private void getUserName(Session session) {
 
 		// make request to the /me API
 		Request.newMeRequest(session, new Request.GraphUserCallback() {
@@ -116,6 +117,15 @@ public class ProfileUtils extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 		Session.getActiveSession().onActivityResult(this, requestCode,
 				resultCode, data);
+	}
+
+	private final class StatusCallBack implements Session.StatusCallback {
+		// callback when session changes state
+		@Override
+		public void call(Session session, SessionState state,
+				Exception exception) {
+			onSessionStateChanged(session, state, exception);
+		}
 	}
 
 }

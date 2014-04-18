@@ -6,11 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Environment;
 import android.util.SparseBooleanArray;
 
 import com.facebook.model.GraphUser;
 
+@TargetApi(19)
 public class TextFriendsExporter implements FriendsExporter {
 
 
@@ -27,27 +30,37 @@ public class TextFriendsExporter implements FriendsExporter {
 
 	@Override
 	public void export() {
+		
 		StringBuffer stringBuffer = new StringBuffer();
 		for (int i = 0; i < checkedItemPositions.size(); i++) {
 			GraphUser user = (GraphUser)adapter.getItem(i);
-			stringBuffer.append("Name: "+user.getName());
+			ExtendedGraphUser extGraphUser = new ExtendedGraphUser(user);
+			//name
+			stringBuffer.append(user.getName());
+			
+			//location
 			if(user.getLocation()!=null){
-				stringBuffer.append("\tLocation: "+user.getLocation().getCity());
+				stringBuffer.append(",Location: "+extGraphUser.getCity());
+			}else{
+				stringBuffer.append(",Location: NA");
 			}
-			stringBuffer.append("\tBirthDate: "+user.getBirthday());
+			
+			//Birthday
+			if(user.getBirthday()!=null){
+				stringBuffer.append(",BirthDate: "+user.getBirthday());
+			}else{
+				stringBuffer.append(",BirthDate: NA");
+			}
+			
 			stringBuffer.append("\n");
 		}
 		
 		FileOutputStream fos = null;
 		try {
-			fos = context.openFileOutput(FILENAME, Context.MODE_WORLD_READABLE);
+			File exportFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), FILENAME);
+			fos = new FileOutputStream(exportFile);
 			fos.write(new String(stringBuffer).getBytes());
-			System.out.println(new File(FILENAME).getAbsolutePath());
-			System.out.println(context.getFilesDir().getAbsolutePath());
-			FileInputStream fin = context.openFileInput(FILENAME);
-			byte[] reader = new byte[fin.available()];
-			                    while (fin.read(reader) != -1) {}
-			                   System.out.println(new String(reader));
+			//readFile();
 
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
@@ -61,6 +74,14 @@ public class TextFriendsExporter implements FriendsExporter {
 				e.printStackTrace();
 			}
 		}
+		
+	}
+
+	private void readFile() throws FileNotFoundException, IOException {
+		FileInputStream fin = context.openFileInput(FILENAME);
+		byte[] reader = new byte[fin.available()];
+		                    while (fin.read(reader) != -1) {}
+		                   System.out.println(new String(reader));
 	}
 
 }

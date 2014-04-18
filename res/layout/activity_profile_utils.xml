@@ -40,4 +40,13 @@
         android:textSize="@dimen/username_text_size"
         tools:ignore="NewApi" />
 
+    <com.facebook.widget.LoginButton
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp"
+        android:text="Logout" />
+
 </RelativeLayout>

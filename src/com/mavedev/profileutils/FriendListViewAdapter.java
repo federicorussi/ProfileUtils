@@ -58,6 +58,7 @@ public class FriendListViewAdapter extends BaseAdapter {
 		
 
 		GraphUser user = friends.get(position);
+		ExtendedGraphUser extUser = new ExtendedGraphUser(user);
 
 		TextView name = (TextView) vi.findViewById(R.id.name); // name
 		TextView location = (TextView) vi.findViewById(R.id.location);
@@ -76,7 +77,7 @@ public class FriendListViewAdapter extends BaseAdapter {
 
 		// location
 		if (user.getLocation() != null) {
-			location.setText(user.getLocation().getCity());
+			location.setText(extUser.getCity());
 		}
 
 		// profile pic
