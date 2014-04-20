@@ -18,7 +18,8 @@ public class TextFriendsExporter implements FriendsExporter {
 
 
 	private static final String FILENAME = "exported_contacts.txt";
-	private FriendListViewAdapter adapter;
+    private static final String DELIMITER = ";";
+    private FriendListViewAdapter adapter;
 	private SparseBooleanArray checkedItemPositions;
 	private Context context;
 
@@ -46,6 +47,12 @@ public class TextFriendsExporter implements FriendsExporter {
 
             //Gender
             appendParameter(stringBuffer, "Gender", extGraphUser.getGender());
+
+            //Link
+            appendParameter(stringBuffer, "Link", user.getLink());
+
+            //Email
+            appendParameter(stringBuffer, "Email", extGraphUser.getEmail());
 			
 			stringBuffer.append("\n");
 		}
@@ -74,9 +81,9 @@ public class TextFriendsExporter implements FriendsExporter {
 
 	private void appendParameter(StringBuffer stringBuffer, String key, String value) {
         if(value!=null){
-            stringBuffer.append(String.format(",%s: %s", key, value));
+            stringBuffer.append(String.format(DELIMITER + "%s: %s", key, value));
         }else{
-            stringBuffer.append(String.format(",%s: %s", key, "NA"));
+            stringBuffer.append(String.format(DELIMITER + "%s: %s", key, "NA"));
         }
 	}
 

@@ -24,4 +24,12 @@ public class ExtendedGraphUser {
     public String getGender() {
         return user.getProperty(GENDER).toString();
     }
+
+    public String getEmail() {
+        if(user.getProperty(EMAIL)!=null){
+            return user.getProperty(EMAIL).toString();
+        }else{
+            return null;
+        }
+    }
 }

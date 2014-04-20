@@ -8,5 +8,7 @@
     <string name="export_contacts">Export Contacts</string>
     <string name="exception">Exception..............</string>
     <string name="title_activity_select_friends">SelectFriendsActivity</string>
+    <string name="action_export">Export</string>
+
 
 </resources>

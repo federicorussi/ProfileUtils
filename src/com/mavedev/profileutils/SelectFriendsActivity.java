@@ -1,7 +1,5 @@
 package com.mavedev.profileutils;
 
-import java.util.List;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -25,6 +24,8 @@ import com.facebook.Request.GraphUserListCallback;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.model.GraphUser;
+
+import java.util.List;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class SelectFriendsActivity extends Activity {
@@ -53,7 +54,6 @@ public class SelectFriendsActivity extends Activity {
 		setContentView(R.layout.activity_select_friends);
 		friendsListView = (ListView) findViewById(R.id.friendsList);
 		noOfSelectedUsers = (TextView)findViewById(R.id.noOfSelectedUsers);
-		exportButton = (Button) findViewById(R.id.exportButton);
 		selectAllCheckBox = (CheckBox) findViewById(R.id.selectAllCheckBox);
 	}
 
@@ -89,8 +89,6 @@ public class SelectFriendsActivity extends Activity {
 			
 			onFriendListItemClick();
 			
-			onClickExport();
-			
 			onClickSelectAll(adapter);
 	}
 
@@ -100,9 +98,6 @@ public class SelectFriendsActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				
-				
-				ListView friendsList = (ListView) parent;
-
 				ImageView checkMark = (ImageView) view.findViewById(R.id.checkMark);
 				int visibility = checkMark.getVisibility()==View.VISIBLE?View.INVISIBLE:View.VISIBLE;
 				checkMark.setVisibility(visibility);
@@ -140,10 +135,7 @@ public class SelectFriendsActivity extends Activity {
 	}
 	
 	private void onClickExport() {
-		exportButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
+
 				CharSequence[] exportOptionsList ={"Text", "HTML"} ;
 				AlertDialog.Builder selectExportOption = new AlertDialog.Builder(SelectFriendsActivity.this);
 				selectExportOption.setTitle("Export friends: "+getTotalSelectedFriendsCount())
@@ -165,11 +157,21 @@ public class SelectFriendsActivity extends Activity {
 
 				});
 				selectExportOption.show();
-			}
-		});
-	}	
+	}
 	
 	private SparseBooleanArray getCheckedItemPositions() {
 		return friendsListView.getCheckedItemPositions();
 	}
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+          switch (item.getItemId()){
+            case R.id.action_export:
+                onClickExport();
+                return true;
+            default:
+                  return true;
+        }
+    }
 }
