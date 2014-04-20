@@ -9,6 +9,7 @@
     <string name="exception">Exception..............</string>
     <string name="title_activity_select_friends">SelectFriendsActivity</string>
     <string name="action_export">Export</string>
+    <string name="action_export_and_mail">Export And Email</string>
 
 
 </resources>

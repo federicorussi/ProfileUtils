@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -42,11 +41,10 @@ public class SelectFriendsActivity extends Activity {
 			"about, " +
 			"bio";
 	
-	ListView friendsListView;
-	TextView noOfSelectedUsers;
-	Button exportButton;
-	CheckBox selectAllCheckBox;
-	FriendListViewAdapter adapter;
+	private ListView friendsListView;
+	private TextView noOfSelectedUsers;
+	private CheckBox selectAllCheckBox;
+	private FriendListViewAdapter adapter;
 	int exportType;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +132,7 @@ public class SelectFriendsActivity extends Activity {
 		return friendsListView.getCheckedItemCount();
 	}
 	
-	private void onClickExport() {
+	private void onClickExport(final boolean sendEmail) {
 
 				CharSequence[] exportOptionsList ={"Text", "HTML"} ;
 				AlertDialog.Builder selectExportOption = new AlertDialog.Builder(SelectFriendsActivity.this);
@@ -150,15 +148,14 @@ public class SelectFriendsActivity extends Activity {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						FriendsExporter exporter = ExportFactory.getExporter(exportType, adapter, getCheckedItemPositions(), SelectFriendsActivity.this);
-						exporter.export();
-						
+                        FriendsExporter exporter = ExportFactory.getExporter(exportType, adapter, getCheckedItemPositions(), SelectFriendsActivity.this, sendEmail);
+						exporter.executeTask();
 					}
 
 				});
 				selectExportOption.show();
 	}
-	
+
 	private SparseBooleanArray getCheckedItemPositions() {
 		return friendsListView.getCheckedItemPositions();
 	}
@@ -168,10 +165,14 @@ public class SelectFriendsActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
           switch (item.getItemId()){
             case R.id.action_export:
-                onClickExport();
+                onClickExport(false);
+                return true;
+            case R.id.action_export_and_mail:
+                onClickExport(true);
                 return true;
             default:
-                  return true;
+                return true;
         }
     }
+
 }
