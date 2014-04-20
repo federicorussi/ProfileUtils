@@ -37,20 +37,15 @@ public class TextFriendsExporter implements FriendsExporter {
 			ExtendedGraphUser extGraphUser = new ExtendedGraphUser(user);
 			//name
 			stringBuffer.append(user.getName());
-			
-			//location
-			if(user.getLocation()!=null){
-				stringBuffer.append(",Location: "+extGraphUser.getCity());
-			}else{
-				stringBuffer.append(",Location: NA");
-			}
-			
+
+            //location
+            appendParameter(stringBuffer, "Location", extGraphUser.getCity());
+
 			//Birthday
-			if(user.getBirthday()!=null){
-				stringBuffer.append(",BirthDate: "+user.getBirthday());
-			}else{
-				stringBuffer.append(",BirthDate: NA");
-			}
+            appendParameter(stringBuffer, "BirthDate", user.getBirthday());
+
+            //Gender
+            appendParameter(stringBuffer, "Gender", extGraphUser.getGender());
 			
 			stringBuffer.append("\n");
 		}
@@ -75,6 +70,14 @@ public class TextFriendsExporter implements FriendsExporter {
 			}
 		}
 		
+	}
+
+	private void appendParameter(StringBuffer stringBuffer, String key, String value) {
+        if(value!=null){
+            stringBuffer.append(String.format(",%s: %s", key, value));
+        }else{
+            stringBuffer.append(String.format(",%s: %s", key, "NA"));
+        }
 	}
 
 	private void readFile() throws FileNotFoundException, IOException {
