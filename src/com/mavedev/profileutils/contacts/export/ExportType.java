@@ -1,4 +1,4 @@
-package com.mavedev.profileutils;
+package com.mavedev.profileutils.contacts.export;
 
 public class ExportType {
 

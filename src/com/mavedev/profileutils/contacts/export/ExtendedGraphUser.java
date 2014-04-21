@@ -1,4 +1,4 @@
-package com.mavedev.profileutils;
+package com.mavedev.profileutils.contacts.export;
 
 import com.facebook.model.GraphUser;
 

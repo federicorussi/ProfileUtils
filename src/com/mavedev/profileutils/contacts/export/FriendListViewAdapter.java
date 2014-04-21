@@ -1,4 +1,4 @@
-package com.mavedev.profileutils;
+package com.mavedev.profileutils.contacts.export;
 
 import java.util.List;
 
@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.facebook.model.GraphUser;
 import com.facebook.widget.ProfilePictureView;
+import com.mavedev.profileutils.R;
 
 public class FriendListViewAdapter extends BaseAdapter {
 

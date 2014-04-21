@@ -23,6 +23,9 @@ import com.facebook.Request.GraphUserListCallback;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.model.GraphUser;
+import com.mavedev.profileutils.contacts.export.ExportFactory;
+import com.mavedev.profileutils.contacts.export.FriendListViewAdapter;
+import com.mavedev.profileutils.contacts.export.FriendsExporter;
 
 import java.util.List;
 
