@@ -100,7 +100,7 @@ public class TextFriendsExporter extends AsyncTask<Void, Integer, String> implem
 
             stringBuffer.append("\n");
 
-            publishProgress(i);
+            publishProgress((int)(i/((float)checkedItemPositions.size())*100));
 
         }
         return stringBuffer;
@@ -112,7 +112,7 @@ public class TextFriendsExporter extends AsyncTask<Void, Integer, String> implem
         progressBar.setMessage("Exporting ...");
         progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressBar.setProgress(0);
-        progressBar.setMax(checkedItemPositions.size());
+        progressBar.setMax(100);
         progressBar.show();
     }
 
