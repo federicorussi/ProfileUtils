@@ -1,6 +1,5 @@
 package com.mavedev.profileutils;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.SparseBooleanArray;
 
 import com.facebook.model.GraphUser;
@@ -19,12 +17,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-@TargetApi(19)
 public class TextFriendsExporter extends AsyncTask<Void, Integer, String> implements FriendsExporter {
 
 
     private static final String FILENAME = "exported_contacts.txt";
     private static final String DELIMITER = ";";
+    private static final String CONTACTS_FOLDER = "Contacts";
     private FriendListViewAdapter adapter;
     private SparseBooleanArray checkedItemPositions;
     private Context context;
@@ -55,7 +53,7 @@ public class TextFriendsExporter extends AsyncTask<Void, Integer, String> implem
         FileOutputStream fos = null;
         File exportFile = null;
         try {
-            exportFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), FILENAME);
+            exportFile = new File(context.getExternalFilesDir(CONTACTS_FOLDER), FILENAME);
             fos = new FileOutputStream(exportFile);
             fos.write(data.getBytes());
             //readFile();
