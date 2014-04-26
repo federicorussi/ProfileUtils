@@ -21,7 +21,14 @@ import com.facebook.model.GraphUser;
 import com.facebook.widget.ProfilePictureView;
 
 public class ProfileUtils extends Activity {
-	private static final List<String> PERMISSIONS = Arrays.asList("email", "friends_notes", "friends_relationship_details", "friends_about_me");
+
+    private static final List<String> PERMISSIONS = Arrays.asList(
+            "email",
+            "friends_notes",
+            "friends_relationship_details",
+            "friends_about_me",
+            "user_checkins");
+
 	private StatusCallback statusCallback= new StatusCallBack(); 
 	private static final int SELECT_FRIENDS_ACTIVITY = 1;
 	ProfilePictureView profilePictureView;
@@ -69,9 +76,9 @@ public class ProfileUtils extends Activity {
 	        return false;
 		}
 	
-		Session.NewPermissionsRequest newPermissionsRequest = new Session
+		/*Session.NewPermissionsRequest newPermissionsRequest = new Session
 			      .NewPermissionsRequest(this, Arrays.asList("user_checkins"));
-			    session.requestNewReadPermissions(newPermissionsRequest);
+			    session.requestNewReadPermissions(newPermissionsRequest);*/
 			    
 		if(session.isOpened()){
 			System.out.println(Session.getActiveSession().getPermissions());

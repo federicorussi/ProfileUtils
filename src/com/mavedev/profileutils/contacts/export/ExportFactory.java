@@ -9,7 +9,7 @@ public class ExportFactory {
 		if(exportType == ExportType.TEXT){
 			return new TextFriendsExporter(adapter, checkedItemPositions, context, sendEmail);
 		}else if(exportType == ExportType.HTML){
-			return new TextFriendsExporter(adapter, checkedItemPositions, context, sendEmail);
+			return new HTMLFriendsExporter(adapter, checkedItemPositions, context, sendEmail);
 		}
 		return null;
 	}
