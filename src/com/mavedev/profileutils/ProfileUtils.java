@@ -6,12 +6,9 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.Request;
@@ -22,8 +19,8 @@ import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.ProfilePictureView;
-
-import org.w3c.dom.Text;
+import com.mavedev.profileutils.contacts.export.SelectFriendsActivity;
+import com.mavedev.profileutils.contacts.stats.FriendsStats;
 
 public class ProfileUtils extends Activity {
 
@@ -38,16 +35,17 @@ public class ProfileUtils extends Activity {
 	private static final int SELECT_FRIENDS_ACTIVITY = 1;
 	ProfilePictureView profilePictureView;
     TextView exportContactsMenuIcon;
+    TextView friendsStatsMenuIcon;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile_utils);
 		profilePictureView = (ProfilePictureView) findViewById(R.id.user_profile_pic);
-        Drawable exportContactsIcon =  getResources().getDrawable(R.drawable.ic_action_user);
-        exportContactsIcon.setColorFilter(android.graphics.Color.rgb(0, 129, 196),
-                PorterDuff.Mode.MULTIPLY);
-        exportContactsMenuIcon = (TextView) findViewById(R.id.export_contatcs_icon_text);
+
+        setMenuIconColor();
+
+        exportContactsMenuIcon = (TextView) findViewById(R.id.export_contacts_icon);
         exportContactsMenuIcon.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -56,14 +54,38 @@ public class ProfileUtils extends Activity {
 			}
 		});
 
+        friendsStatsMenuIcon = (TextView) findViewById(R.id.friends_stats_icon);
+        friendsStatsMenuIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickShowFriendsStatsView();
+            }
+        });
+
+
 		if(ensureOpenSession()){
 			getUserName(Session.getActiveSession());
 		}
 
 	}
 
-	
-	protected void onClickGetContactsList() {
+    private void onClickShowFriendsStatsView() {
+        if (ensureOpenSession()) {
+            Intent intent = new Intent(this, FriendsStats.class);
+            startActivityForResult(intent, 1);
+        }
+    }
+
+    private void setMenuIconColor() {
+        getResources().getDrawable(R.drawable.ic_action_user).setColorFilter(android.graphics.Color.rgb(0, 129, 196),
+                PorterDuff.Mode.MULTIPLY);
+
+        getResources().getDrawable(R.drawable.ic_action_data_usage).setColorFilter(android.graphics.Color.rgb(0, 129, 196),
+                PorterDuff.Mode.MULTIPLY);
+    }
+
+
+    protected void onClickGetContactsList() {
 		if (ensureOpenSession()) {
             Intent intent = new Intent(this, SelectFriendsActivity.class);
             startActivityForResult(intent, SELECT_FRIENDS_ACTIVITY);

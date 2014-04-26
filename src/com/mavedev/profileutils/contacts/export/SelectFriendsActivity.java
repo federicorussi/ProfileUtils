@@ -1,4 +1,4 @@
-package com.mavedev.profileutils;
+package com.mavedev.profileutils.contacts.export;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -23,9 +23,7 @@ import com.facebook.Request.GraphUserListCallback;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.model.GraphUser;
-import com.mavedev.profileutils.contacts.export.ExportFactory;
-import com.mavedev.profileutils.contacts.export.FriendListViewAdapter;
-import com.mavedev.profileutils.contacts.export.FriendsExporter;
+import com.mavedev.profileutils.R;
 
 import java.util.List;
 
@@ -43,7 +41,7 @@ public class SelectFriendsActivity extends Activity {
 			"relationship_status, " +
 			"about, " +
 			"bio";
-	
+
 	private ListView friendsListView;
 	private TextView noOfSelectedUsers;
 	private CheckBox selectAllCheckBox;
@@ -73,7 +71,7 @@ public class SelectFriendsActivity extends Activity {
 		params.putString("fields", USER_FIELDS);
 		Session session = Session.getActiveSession();
 		Request newMyFriendsRequest = Request.newMyFriendsRequest(session, new GraphUserListCallback() {
-			
+
 			@Override
 			public void onCompleted(List<GraphUser> users, Response response) {
 				populateFriendsList(users);
@@ -84,7 +82,8 @@ public class SelectFriendsActivity extends Activity {
 	}
 
 	protected void populateFriendsList(final List<GraphUser> friends) {
-			adapter = new FriendListViewAdapter(this, friends);
+			FriendListService.friends = friends;
+            adapter = new FriendListViewAdapter(this, friends);
 			friendsListView.setAdapter(adapter);
 			friendsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 			
