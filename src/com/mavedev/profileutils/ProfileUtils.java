@@ -5,10 +5,13 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.Request;
@@ -19,6 +22,8 @@ import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.ProfilePictureView;
+
+import org.w3c.dom.Text;
 
 public class ProfileUtils extends Activity {
 
@@ -32,21 +37,25 @@ public class ProfileUtils extends Activity {
 	private StatusCallback statusCallback= new StatusCallBack(); 
 	private static final int SELECT_FRIENDS_ACTIVITY = 1;
 	ProfilePictureView profilePictureView;
-	
-	@Override
+    TextView exportContactsMenuIcon;
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile_utils);
 		profilePictureView = (ProfilePictureView) findViewById(R.id.user_profile_pic);
-		Button button = (Button) findViewById(R.id.export_contacts_view);
-		button.setOnClickListener(new View.OnClickListener() {
-			
+        Drawable exportContactsIcon =  getResources().getDrawable(R.drawable.ic_action_user);
+        exportContactsIcon.setColorFilter(android.graphics.Color.rgb(0, 129, 196),
+                PorterDuff.Mode.MULTIPLY);
+        exportContactsMenuIcon = (TextView) findViewById(R.id.export_contatcs_icon_text);
+        exportContactsMenuIcon.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				onClickGetContactsList();
 			}
 		});
-		
+
 		if(ensureOpenSession()){
 			getUserName(Session.getActiveSession());
 		}
@@ -123,7 +132,7 @@ public class ProfileUtils extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		Session.getActiveSession().onActivityResult(this, requestCode,
-				resultCode, data);
+                resultCode, data);
 	}
 
 	private final class StatusCallBack implements Session.StatusCallback {
