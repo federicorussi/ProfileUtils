@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.facebook.model.GraphUser;
 import com.mavedev.profileutils.contacts.export.FriendListService;
+import com.mavedev.profileutils.contacts.export.FriendsCallback;
 
 import java.util.List;
 
@@ -14,8 +15,13 @@ import java.util.List;
 public class FriendsStats extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        List<GraphUser> friendsList = FriendListService.getFriendsList();
-        System.out.println(new Friends(friendsList).getNumberOfFriends("MALE"));
+        FriendListService.getFriendsList(new FriendsCallback() {
+            @Override
+            public void onCompleted(List<GraphUser> friends) {
+                System.out.println(new Friends(friends).getNumberOfFriends("MALE"));
+            }
+        });
+
     }
 
 

@@ -30,17 +30,6 @@ import java.util.List;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class SelectFriendsActivity extends Activity {
 
-	private static final String USER_FIELDS = "id, " +
-			"name, " +
-			"location, " +
-			"birthday, " +
-			"gender, " +
-			"email, " +
-			"hometown, " +
-			"link, " +
-			"relationship_status, " +
-			"about, " +
-			"bio";
 
 	private ListView friendsListView;
 	private TextView noOfSelectedUsers;
@@ -67,18 +56,13 @@ public class SelectFriendsActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 		//get friends
-		Bundle params = new Bundle();
-		params.putString("fields", USER_FIELDS);
-		Session session = Session.getActiveSession();
-		Request newMyFriendsRequest = Request.newMyFriendsRequest(session, new GraphUserListCallback() {
+        FriendListService.getFriendsList(new FriendsCallback() {
+            @Override
+            public void onCompleted(List<GraphUser> friends) {
+                populateFriendsList(friends);
+            }
+        });
 
-			@Override
-			public void onCompleted(List<GraphUser> users, Response response) {
-				populateFriendsList(users);
-			}
-		});
-		newMyFriendsRequest.setParameters(params);
-		newMyFriendsRequest.executeAsync();
 	}
 
 	protected void populateFriendsList(final List<GraphUser> friends) {
