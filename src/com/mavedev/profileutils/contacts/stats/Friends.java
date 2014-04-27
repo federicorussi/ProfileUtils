@@ -36,4 +36,8 @@ public class Friends {
             }
         }).size();
     }
+
+    public int getTotalFriends() {
+        return friends.size();
+    }
 }

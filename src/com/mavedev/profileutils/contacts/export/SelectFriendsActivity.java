@@ -144,7 +144,7 @@ public class SelectFriendsActivity extends Activity {
 
 	private SparseBooleanArray getCheckedItemPositions() {
 		return friendsListView.getCheckedItemPositions();
-	}
+    	}
 
 
     @Override
