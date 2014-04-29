@@ -26,6 +26,7 @@ import com.mavedev.profileutils.contacts.export.FriendListService;
 import com.mavedev.profileutils.contacts.export.FriendsCallback;
 import com.mavedev.profileutils.contacts.stats.FriendsStats;
 
+@SuppressWarnings("ConstantConditions")
 public class ProfileUtils extends Activity {
 
     private static final List<String> PERMISSIONS = Arrays.asList(
@@ -85,6 +86,7 @@ public class ProfileUtils extends Activity {
 
         getResources().getDrawable(R.drawable.ic_action_data_usage).setColorFilter(android.graphics.Color.rgb(0, 129, 196),
                 PorterDuff.Mode.MULTIPLY);
+
     }
 
 

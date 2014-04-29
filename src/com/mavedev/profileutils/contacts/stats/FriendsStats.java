@@ -1,6 +1,7 @@
 package com.mavedev.profileutils.contacts.stats;
 
 import android.app.Activity;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -24,6 +25,10 @@ public class FriendsStats extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_stats);
+
+        getResources().getDrawable(R.drawable.ic_action_next_item).setColorFilter(android.graphics.Color.rgb(0, 129, 196),
+                PorterDuff.Mode.MULTIPLY);
+        
         noOFMaleFriendsText = (TextView) findViewById(R.id.noOfMaleFriends);
         noOFFemaleFriendsText = (TextView) findViewById(R.id.noOfFemaleFriends);
         maleToFemaleRatioText = (TextView) findViewById(R.id.maleToFemaleRatio);
