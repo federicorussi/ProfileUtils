@@ -7,6 +7,7 @@ import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.model.GraphUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class FriendListService {
             "about, " +
             "bio";
 
-    public static List<GraphUser> friends;
+    private static List<Friend> friends;
     public static void getFriendsList(final FriendsCallback callback){
         if(FriendListService.friends == null){
             Bundle params = new Bundle();
@@ -36,8 +37,8 @@ public class FriendListService {
 
                 @Override
                 public void onCompleted(List<GraphUser> users, Response response) {
-                    FriendListService.friends = users;
-                    callback.onCompleted(users);
+                    FriendListService.setFriends(users);
+                    callback.onCompleted(FriendListService.friends);
                 }
             });
             newMyFriendsRequest.setParameters(params);
@@ -45,5 +46,13 @@ public class FriendListService {
         }else{
             callback.onCompleted(FriendListService.friends);
         }
+    }
+
+    public static void setFriends(List<GraphUser> users){
+        List<Friend> friends = new ArrayList<Friend>();
+        for (GraphUser user: users){
+            friends.add(new Friend(user));
+        }
+        FriendListService.friends = friends;
     }
 }

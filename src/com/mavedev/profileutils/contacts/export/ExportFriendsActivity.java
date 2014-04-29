@@ -18,17 +18,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.facebook.Request;
-import com.facebook.Request.GraphUserListCallback;
-import com.facebook.Response;
-import com.facebook.Session;
 import com.facebook.model.GraphUser;
 import com.mavedev.profileutils.R;
 
 import java.util.List;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class SelectFriendsActivity extends Activity {
+public class ExportFriendsActivity extends Activity {
 
 
 	private ListView friendsListView;
@@ -56,17 +52,17 @@ public class SelectFriendsActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 		//get friends
-        FriendListService.getFriendsList(new FriendsCallback() {
+        /*FriendListService.getFriendsList(new FriendsCallback() {
             @Override
             public void onCompleted(List<GraphUser> friends) {
                 populateFriendsList(friends);
             }
-        });
+        });*/
+        populateFriendsList((List<Friend>) getIntent().getSerializableExtra("friends"));
 
 	}
 
-	protected void populateFriendsList(final List<GraphUser> friends) {
-			FriendListService.friends = friends;
+	protected void populateFriendsList(final List<Friend> friends) {
             adapter = new FriendListViewAdapter(this, friends);
 			friendsListView.setAdapter(adapter);
 			friendsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -121,7 +117,7 @@ public class SelectFriendsActivity extends Activity {
 	private void onClickExport(final boolean sendEmail) {
 
 				CharSequence[] exportOptionsList ={"Text", "HTML"} ;
-				AlertDialog.Builder selectExportOption = new AlertDialog.Builder(SelectFriendsActivity.this);
+				AlertDialog.Builder selectExportOption = new AlertDialog.Builder(ExportFriendsActivity.this);
 				selectExportOption.setTitle("Export friends: "+getTotalSelectedFriendsCount())
 				.setSingleChoiceItems(exportOptionsList, 0, new DialogInterface.OnClickListener() {
 					
@@ -134,7 +130,7 @@ public class SelectFriendsActivity extends Activity {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-                        FriendsExporter exporter = ExportFactory.getExporter(exportType, adapter, getCheckedItemPositions(), SelectFriendsActivity.this, sendEmail);
+                        FriendsExporter exporter = ExportFactory.getExporter(exportType, adapter, getCheckedItemPositions(), ExportFriendsActivity.this, sendEmail);
 						exporter.executeTask();
 					}
 

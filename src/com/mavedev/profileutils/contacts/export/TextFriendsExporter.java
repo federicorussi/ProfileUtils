@@ -76,25 +76,24 @@ public class TextFriendsExporter extends AsyncTask<Void, Integer, String> implem
     private StringBuffer buildData() {
         StringBuffer stringBuffer = new StringBuffer();
         for (int i = 0; i < checkedItemPositions.size(); i++) {
-            GraphUser user = (GraphUser) adapter.getItem(i);
-            ExtendedGraphUser extGraphUser = new ExtendedGraphUser(user);
+            Friend user = (Friend) adapter.getItem(i);
             //name
             stringBuffer.append(user.getName());
 
             //location
-            appendParameter(stringBuffer, "Location", extGraphUser.getCity());
+            appendParameter(stringBuffer, "Location", user.getLocation());
 
             //Birthday
             appendParameter(stringBuffer, "BirthDate", user.getBirthday());
 
             //Gender
-            appendParameter(stringBuffer, "Gender", extGraphUser.getGender());
+            appendParameter(stringBuffer, "Gender", user.getGender());
 
             //Link
             appendParameter(stringBuffer, "Link", user.getLink());
 
             //Email
-            appendParameter(stringBuffer, "Email", extGraphUser.getEmail());
+            appendParameter(stringBuffer, "Email", user.getEmail());
 
             stringBuffer.append("\n");
 

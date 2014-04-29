@@ -1,5 +1,6 @@
 package com.mavedev.profileutils;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +20,10 @@ import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.ProfilePictureView;
-import com.mavedev.profileutils.contacts.export.SelectFriendsActivity;
+import com.mavedev.profileutils.contacts.export.ExportFriendsActivity;
+import com.mavedev.profileutils.contacts.export.Friend;
+import com.mavedev.profileutils.contacts.export.FriendListService;
+import com.mavedev.profileutils.contacts.export.FriendsCallback;
 import com.mavedev.profileutils.contacts.stats.FriendsStats;
 
 public class ProfileUtils extends Activity {
@@ -31,9 +35,8 @@ public class ProfileUtils extends Activity {
             "friends_about_me",
             "user_checkins");
 
-	private StatusCallback statusCallback= new StatusCallBack(); 
-	private static final int SELECT_FRIENDS_ACTIVITY = 1;
-	ProfilePictureView profilePictureView;
+	private StatusCallback statusCallback= new StatusCallBack();
+    ProfilePictureView profilePictureView;
     TextView exportContactsMenuIcon;
     TextView friendsStatsMenuIcon;
 
@@ -87,8 +90,15 @@ public class ProfileUtils extends Activity {
 
     protected void onClickGetContactsList() {
 		if (ensureOpenSession()) {
-            Intent intent = new Intent(this, SelectFriendsActivity.class);
-            startActivityForResult(intent, SELECT_FRIENDS_ACTIVITY);
+            final Intent intent = new Intent(this, ExportFriendsActivity.class);
+            FriendListService.getFriendsList(new FriendsCallback() {
+                @Override
+                public void onCompleted(List<Friend> friends) {
+                    intent.putExtra("friends", (Serializable) friends);
+                    startActivityForResult(intent, 1);
+                }
+            });
+
         }
 	}
 

@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface FriendsCallback {
 
-    public void onCompleted(List<GraphUser> friends);
+    public void onCompleted(List<Friend> friends);
 }

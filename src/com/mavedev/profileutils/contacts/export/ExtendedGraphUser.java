@@ -4,7 +4,8 @@ import com.facebook.model.GraphUser;
 
 public class ExtendedGraphUser {
 
-    GraphUser user;
+    private GraphUser user;
+
     private static final String GENDER = "gender";
     public static final String EMAIL = "email";
     public static final String LOCATION = "location";
@@ -31,5 +32,9 @@ public class ExtendedGraphUser {
         }else{
             return null;
         }
+    }
+
+    public GraphUser getUser() {
+        return user;
     }
 }

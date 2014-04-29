@@ -36,7 +36,7 @@
         <activity android:name="com.mavedev.profileutils.PickFriendsActivity" >
         </activity>
         <activity
-            android:name=".contacts.export.SelectFriendsActivity"
+            android:name=".contacts.export.ExportFriendsActivity"
             android:label="@string/title_activity_select_friends" >
         </activity>
         <activity android:name=".contacts.stats.FriendsStats" />

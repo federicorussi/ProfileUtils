@@ -4,6 +4,7 @@ import com.facebook.model.GraphUser;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.mavedev.profileutils.contacts.export.ExtendedGraphUser;
+import com.mavedev.profileutils.contacts.export.Friend;
 
 import java.util.List;
 
@@ -12,9 +13,9 @@ import java.util.List;
  */
 public class Friends {
 
-    private List<GraphUser> friends;
+    private List<Friend> friends;
 
-    public Friends(List<GraphUser> friends) {
+    public Friends(List<Friend> friends) {
         this.friends = friends;
     }
 
@@ -28,11 +29,10 @@ public class Friends {
         }
 
 
-        return Collections2.filter(friends, new Predicate<GraphUser>() {
+        return Collections2.filter(friends, new Predicate<Friend>() {
             @Override
-            public boolean apply(GraphUser graphUser) {
-                ExtendedGraphUser extUser = new ExtendedGraphUser(graphUser);
-                return extUser.getGender().equalsIgnoreCase(filtergender);
+            public boolean apply(Friend friend) {
+                return friend.getGender().equalsIgnoreCase(filtergender);
             }
         }).size();
     }
